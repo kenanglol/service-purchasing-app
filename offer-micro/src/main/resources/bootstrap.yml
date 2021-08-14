@@ -1,0 +1,17 @@
+server:
+  port : 8120
+spring:
+  application:
+    name : offer-micro
+  datasource:
+    username: postgres
+    password: 1597538624
+    url: 'jdbc:postgresql://localhost:5432/spa'
+    driver-class-name: org.postgresql.Driver
+  devtools:
+    restart:
+      enabled : true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
