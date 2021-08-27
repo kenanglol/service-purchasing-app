@@ -1,0 +1,37 @@
+server:
+  port : 8200
+spring:
+  application:
+    name : api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: offer-get
+        uri: lb://OFFER-MICRO
+        predicates:
+        - Path=/api/offer/list
+        - Method=GET
+      - id: offer-create
+        uri: lb://OFFER-MICRO
+        predicates:
+        - Path=/api/offer/create
+        - Method=POST
+      - id: offer-update
+        uri: lb://OFFER-MICRO
+        predicates:
+        - Path=/api/offer/update
+        - Method=PUT
+      - id: offer-delete
+        uri: lb://OFFER-MICRO
+        predicates:
+        - Path=/api/offer/delete
+        - Method=DELETE
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
