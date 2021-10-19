@@ -9,4 +9,7 @@ public class UserExceptions {
 
     public static ExceptionInfo USER_UPDATE_ERROR = new ExceptionInfo(3L,
             "Kullanıcı bilgileri güncellenirken hata oluştu.");
+
+    public static ExceptionInfo USER_CREATE_ERROR = new ExceptionInfo(3L,
+            "Kullanıcı bilgileri kaydedilirken hata oluştu.");
 }

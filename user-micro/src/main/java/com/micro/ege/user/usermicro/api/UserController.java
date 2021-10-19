@@ -1,6 +1,7 @@
 package com.micro.ege.user.usermicro.api;
 
 import com.micro.ege.user.usermicro.core.exception.BussinessException;
+import com.micro.ege.user.usermicro.core.exception.DataManipulationException;
 import com.micro.ege.user.usermicro.core.exception.DataNotFoundException;
 import com.micro.ege.user.usermicro.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +31,7 @@ public class UserController {
     @PostMapping(path = "/create")
     public ResponseEntity<CreateUserResponse> createUser(
             @Parameter(description = "Request object for create",required = true)
-            @RequestBody CreateUserRequest createUserRequest) {
+            @RequestBody CreateUserRequest createUserRequest) throws DataManipulationException {
         return new ResponseEntity<CreateUserResponse>(userMapper.mapServiceOutputToApiResponse(
                 userService.createUser(userMapper.mapApiRequestToServiceInput(
                         createUserRequest))), HttpStatus.CREATED);
@@ -43,8 +44,7 @@ public class UserController {
             @Parameter(description = "Request object for get",required = true)
             @RequestBody GetUserRequest getUserRequest) throws DataNotFoundException {
         return new ResponseEntity<GetUserResponse>(userMapper.mapServiceOutputToApiResponse(
-                userService.getUser(userMapper.mapApiRequestToServiceInput(
-                        getUserRequest))), HttpStatus.CREATED);
+                userService.getUser(userMapper.mapApiRequestToServiceInput(getUserRequest))), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update Offer",description = "Update User")
@@ -54,7 +54,7 @@ public class UserController {
             @Parameter(description = "Request object for create",required = true)
             @RequestBody UpdateUserRequest updateUserRequest) throws BussinessException {
         return new ResponseEntity<UpdateUserResponse>(userMapper.mapServiceOutputToApiResponse(
-                userService.updateUser(userMapper.mapApiRequestToServiceInput(
-                        updateUserRequest))), HttpStatus.CREATED);
+                userService.updateUser(userMapper.mapApiRequestToServiceInput(updateUserRequest))), HttpStatus.CREATED);
     }
+
 }

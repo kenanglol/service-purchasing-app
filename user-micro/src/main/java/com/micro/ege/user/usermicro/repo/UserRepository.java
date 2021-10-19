@@ -11,5 +11,5 @@ public interface UserRepository {
 
     Boolean createUser(CreateUserDto createUserDto);
 
-    public Boolean updateUser(String userId, String name, String surname);
+    Boolean updateUser(String userId, String name, String surname);
 }

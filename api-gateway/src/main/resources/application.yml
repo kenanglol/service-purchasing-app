@@ -30,7 +30,31 @@ spring:
         predicates:
         - Path=/api/offer/delete
         - Method=DELETE
-
+      - id: advert-get
+        uri: lb://ADVERT-MICRO
+        predicates:
+        - Path=/api/advert/list
+        - Method=GET
+      - id: advert-create
+        uri: lb://ADVERT-MICRO
+        predicates:
+        - Path=/api/advert/create
+        - Method=POST
+      - id: advert-update
+        uri: lb://ADVERT-MICRO
+        predicates:
+        - Path=/api/advert/update
+        - Method=PUT
+      - id: advert-delete
+        uri: lb://ADVERT-MICRO
+        predicates:
+        - Path=/api/advert/delete
+        - Method=DELETE
+      - id: user-create
+        uri: lb://USER-MICRO
+        predicates:
+        - Path=/api/user/create
+        - Method=POST
 eureka:
   client:
     serviceUrl:

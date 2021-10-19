@@ -10,3 +10,15 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8010/eureka/
+
+gateway:
+  ip: "192.168.1.2"
+
+# 10 days:
+token:
+  expiration_time: 864000000
+  secret: 4sfdg4sdfbgv5z4dgd
+
+user:
+  login:
+    url: "/api/user/login"
