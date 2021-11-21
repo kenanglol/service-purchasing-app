@@ -9,7 +9,6 @@ com\micro\ege\advert\advertservice\api\DeleteAdvertRequest.class
 com\micro\ege\advert\advertservice\api\UpdateAdvertResponse.class
 com\micro\ege\advert\advertservice\service\UpdateAdvertServiceOutput.class
 com\micro\ege\advert\advertservice\service\CreateAdvertServiceOutput.class
-com\micro\ege\advert\advertservice\repo\AdvertOrmRepository.class
 com\micro\ege\advert\advertservice\service\ListAdvertServiceInput.class
 com\micro\ege\advert\advertservice\dto\ListAdvertDto.class
 com\micro\ege\advert\advertservice\service\CreateAdvertServiceInput.class

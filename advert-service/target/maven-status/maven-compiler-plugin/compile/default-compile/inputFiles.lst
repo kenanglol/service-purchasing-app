@@ -18,7 +18,6 @@ C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\j
 C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\api\UpdateAdvertResponse.java
 C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\service\ListAdvertServiceInput.java
 C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\service\DeleteAdvertServiceOutput.java
-C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\repo\AdvertOrmRepository.java
 C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\AdvertServiceApplication.java
 C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\api\ListAdvertRequest.java
 C:\Users\Kenan\Documents\GitHub\service-purchasing-app\advert-service\src\main\java\com\micro\ege\advert\advertservice\api\AdvertMapper.java

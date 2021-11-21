@@ -2,8 +2,7 @@ package com.micro.ege.offer.offermicro.repo;
 
 import com.micro.ege.offer.offermicro.config.JpaConfig;
 import com.micro.ege.offer.offermicro.core.utils.OfferUtils;
-import com.micro.ege.offer.offermicro.dto.CreateOfferDto;
-import com.micro.ege.offer.offermicro.dto.ListOfferDto;
+import com.micro.ege.offer.offermicro.dto.OfferDto;
 import com.micro.ege.offer.offermicro.dto.OfferDetails;
 import com.micro.ege.offer.offermicro.dto.ServiceOfferDto;
 import org.springframework.beans.factory.annotation.Value;
@@ -89,17 +88,17 @@ public class OfferRepositoryImpl implements OfferRepository{
     }
 
     @Override
-    public Boolean createOffer(CreateOfferDto createOfferDto) {
+    public Boolean createOffer(OfferDto offerDto) {
         try{
             final String createOffer = StreamUtils.copyToString(
                     createOfferResource.getInputStream(), Charset.defaultCharset());
             SqlParameterSource parameterSource = new MapSqlParameterSource()
                     .addValue("offerID", OfferUtils.generateOfferID(), Types.VARCHAR)
-                    .addValue("serviceProviderID", createOfferDto.getServiceProviderID(), Types.VARCHAR)
-                    .addValue("advertID", createOfferDto.getAdvertID(), Types.VARCHAR)
-                    .addValue("freeText", createOfferDto.getFreeText(), Types.VARCHAR)
-                    .addValue("serviceStatus", createOfferDto.getServiceStatus(), Types.SMALLINT)
-                    .addValue("offerTime", createOfferDto.getOfferTime(), Types.INTEGER);
+                    .addValue("serviceProviderID", offerDto.getServiceProviderID(), Types.VARCHAR)
+                    .addValue("advertID", offerDto.getAdvertID(), Types.VARCHAR)
+                    .addValue("freeText", offerDto.getFreeText(), Types.VARCHAR)
+                    .addValue("serviceStatus", offerDto.getServiceStatus(), Types.SMALLINT)
+                    .addValue("offerTime", offerDto.getOfferTime(), Types.INTEGER);
 
             int affectedRows = namedParameterJdbcTemplate.
                     update(createOffer, parameterSource);

@@ -3,7 +3,7 @@ package com.micro.ege.offer.offermicro.service;
 import com.micro.ege.offer.offermicro.core.exception.BusinessException;
 import com.micro.ege.offer.offermicro.core.exception.OfferExceptions;
 import com.micro.ege.offer.offermicro.core.utils.OfferUtils;
-import com.micro.ege.offer.offermicro.dto.CreateOfferDto;
+import com.micro.ege.offer.offermicro.dto.OfferDto;
 import com.micro.ege.offer.offermicro.dto.OfferDetails;
 import com.micro.ege.offer.offermicro.dto.ServiceOfferDto;
 import com.micro.ege.offer.offermicro.repo.OfferRepository;
@@ -33,14 +33,14 @@ public class OfferServiceImpl implements OfferService{
             if (existOffer != null) {
                 throw new BusinessException(OfferExceptions.TIME_IS_FILLED_ALREADY);
             }
-            CreateOfferDto createOfferDto = new CreateOfferDto();
-            createOfferDto.setServiceProviderID(createOfferServiceInput.getServiceProviderID());
-            createOfferDto.setAdvertID(createOfferServiceInput.getAdvertID());
-            createOfferDto.setFreeText(createOfferServiceInput.getFreeText());
-            createOfferDto.setServiceStatus(createOfferServiceInput.getServiceStatus());
-            createOfferDto.setOfferTime(createOfferServiceInput.getOfferTime());
+            OfferDto offerDto = new OfferDto();
+            offerDto.setServiceProviderID(createOfferServiceInput.getServiceProviderID());
+            offerDto.setAdvertID(createOfferServiceInput.getAdvertID());
+            offerDto.setFreeText(createOfferServiceInput.getFreeText());
+            offerDto.setServiceStatus(createOfferServiceInput.getServiceStatus());
+            offerDto.setOfferTime(createOfferServiceInput.getOfferTime());
 
-            result.setIsSucceeded(offerRepository.createOffer(createOfferDto));
+            result.setIsSucceeded(offerRepository.createOffer(offerDto));
             result.setErrorCode(0L);
             result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
             return result;

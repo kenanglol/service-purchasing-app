@@ -1,18 +1,12 @@
 package com.micro.ege.advert.advertservice.service;
 
 import com.micro.ege.advert.advertservice.dto.AdvertDto;
-import com.micro.ege.advert.advertservice.repo.AdvertOrmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.micro.ege.advert.advertservice.core.exception.BusinessException;
 import com.micro.ege.advert.advertservice.core.exception.AdvertExceptions;
-import com.micro.ege.advert.advertservice.core.utils.AdvertUtils;
-import com.micro.ege.advert.advertservice.dto.CreateAdvertDto;
 import com.micro.ege.advert.advertservice.dto.AdvertDetailsDto;
-import com.micro.ege.advert.advertservice.dto.ServiceAdvertDto;
 import com.micro.ege.advert.advertservice.repo.AdvertRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

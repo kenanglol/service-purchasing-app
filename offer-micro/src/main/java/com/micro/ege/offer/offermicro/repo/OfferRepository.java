@@ -1,7 +1,6 @@
 package com.micro.ege.offer.offermicro.repo;
 
-import com.micro.ege.offer.offermicro.dto.CreateOfferDto;
-import com.micro.ege.offer.offermicro.dto.ListOfferDto;
+import com.micro.ege.offer.offermicro.dto.OfferDto;
 import com.micro.ege.offer.offermicro.dto.OfferDetails;
 import com.micro.ege.offer.offermicro.dto.ServiceOfferDto;
 
@@ -12,7 +11,7 @@ public interface OfferRepository {
 
     ServiceOfferDto getOfferWithProviderIdAndTime(String serviceProviderID, Integer Time);
 
-    Boolean createOffer(CreateOfferDto createOfferDto);
+    Boolean createOffer(OfferDto offerDto);
 
     Boolean updateOffer(String offerID, String freeText, Short serviceStatus, Integer offerTime);
 
