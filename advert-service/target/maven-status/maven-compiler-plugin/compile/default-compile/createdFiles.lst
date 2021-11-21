@@ -1,7 +1,6 @@
 com\micro\ege\advert\advertservice\core\utils\AdvertUtils.class
 com\micro\ege\advert\advertservice\service\DeleteAdvertServiceOutput.class
 com\micro\ege\advert\advertservice\api\ListAdvertResponse.class
-com\micro\ege\advert\advertservice\config\JpaConfig.class
 com\micro\ege\advert\advertservice\api\AdvertMapper.class
 com\micro\ege\advert\advertservice\repo\AdvertRepository.class
 com\micro\ege\advert\advertservice\api\ListAdvertRequest.class
@@ -10,6 +9,7 @@ com\micro\ege\advert\advertservice\api\DeleteAdvertRequest.class
 com\micro\ege\advert\advertservice\api\UpdateAdvertResponse.class
 com\micro\ege\advert\advertservice\service\UpdateAdvertServiceOutput.class
 com\micro\ege\advert\advertservice\service\CreateAdvertServiceOutput.class
+com\micro\ege\advert\advertservice\repo\AdvertOrmRepository.class
 com\micro\ege\advert\advertservice\service\ListAdvertServiceInput.class
 com\micro\ege\advert\advertservice\dto\ListAdvertDto.class
 com\micro\ege\advert\advertservice\service\CreateAdvertServiceInput.class
@@ -26,8 +26,8 @@ com\micro\ege\advert\advertservice\service\UpdateAdvertServiceInput.class
 com\micro\ege\advert\advertservice\api\DeleteAdvertResponse.class
 com\micro\ege\advert\advertservice\core\exception\ExceptionData.class
 com\micro\ege\advert\advertservice\api\UpdateAdvertRequest.class
-com\micro\ege\advert\advertservice\repo\AdvertRepositoryImpl.class
 com\micro\ege\advert\advertservice\api\AdvertMapperImpl.class
+com\micro\ege\advert\advertservice\dto\AdvertDto.class
 com\micro\ege\advert\advertservice\service\ListAdvertServiceOutput.class
 com\micro\ege\advert\advertservice\dto\AdvertDetailsDto.class
 com\micro\ege\advert\advertservice\core\exception\AdvertExceptions.class

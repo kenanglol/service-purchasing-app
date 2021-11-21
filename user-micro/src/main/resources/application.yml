@@ -6,6 +6,15 @@ spring:
   devtools:
     restart:
       enabled : true
+app:
+  datasource:
+    url: "jdbc:postgresql://ec2-44-195-240-222.compute-1.amazonaws.com:5432/d58n869qbihu3l"
+    username: "sskxvbppijiykg"
+    password: 4813c95e36a16807f57c833e4e5dc5b886bb021ac413e71477fad7fc28255eca
+    driver-class-name: org.postgresql.Driver
+    configuration:
+      maximum-pool-size: 30
+
 eureka:
   client:
     serviceUrl:

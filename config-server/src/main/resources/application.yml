@@ -1,0 +1,5 @@
+server:
+  port : 8170
+spring:
+  application:
+    name : config-server

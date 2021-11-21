@@ -1,5 +1,7 @@
 package com.micro.ege.advert.advertservice.service;
 
+import com.micro.ege.advert.advertservice.dto.AdvertDto;
+import com.micro.ege.advert.advertservice.repo.AdvertOrmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.micro.ege.advert.advertservice.core.exception.BusinessException;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,22 +28,31 @@ public class AdvertServiceImpl implements AdvertService {
 
         CreateAdvertServiceOutput result = new CreateAdvertServiceOutput();
         try{
-            ServiceAdvertDto existAdvert = AdvertRepository.getAdvertWithProviderIdAndTime(
-                            createAdvertServiceInput.getServiceProviderID(),
-                            createAdvertServiceInput.getAdvertCreateTime());
+            AdvertDto existAdvert = AdvertRepository.findByServiceProviderIDAndAdvertCreateTime(
+                    createAdvertServiceInput.getServiceProviderID(),
+                    createAdvertServiceInput.getAdvertCreateTime()
+            );
+            if (existAdvert != null) {
+                throw new BusinessException(AdvertExceptions.TIME_IS_FILLED_ALREADY);
+            }
+
             if (createAdvertServiceInput.getMinPrice()<0) {
                 throw new BusinessException(AdvertExceptions.MIN_PRICE_IS_NOT_LOWER_THAN_ZERO);
             }
-            CreateAdvertDto createAdvertDto = new CreateAdvertDto();
-            createAdvertDto.setServiceProviderID(createAdvertServiceInput.getServiceProviderID());
-            createAdvertDto.setAdvertName(createAdvertServiceInput.getAdvertName());
-            createAdvertDto.setSummary(createAdvertServiceInput.getSummary());
-            createAdvertDto.setAdvertCreateTime(createAdvertServiceInput.getAdvertCreateTime());
-            createAdvertDto.setCategory(createAdvertServiceInput.getCategory());
-            createAdvertDto.setMinPrice(createAdvertServiceInput.getMinPrice());
-            createAdvertDto.setCity(createAdvertServiceInput.getCity());
 
-            result.setIsSucceeded(AdvertRepository.createAdvert(createAdvertDto));
+            AdvertDto advertDto = new AdvertDto();
+            advertDto.setServiceProviderID(createAdvertServiceInput.getServiceProviderID());
+            advertDto.setAdvertName(createAdvertServiceInput.getAdvertName());
+            advertDto.setSummary(createAdvertServiceInput.getSummary());
+            advertDto.setAdvertCreateTime(createAdvertServiceInput.getAdvertCreateTime());
+            advertDto.setCategory(createAdvertServiceInput.getCategory());
+            advertDto.setMinPrice(createAdvertServiceInput.getMinPrice());
+            advertDto.setCity(createAdvertServiceInput.getCity());
+
+            AdvertRepository.save(advertDto);
+
+
+            result.setIsSucceeded(AdvertRepository.findById(advertDto.getAdvertID()).isPresent());
             result.setErrorCode(0L);
             result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
             return result;
@@ -58,51 +70,51 @@ public class AdvertServiceImpl implements AdvertService {
     public UpdateAdvertServiceOutput updateAdvert(UpdateAdvertServiceInput updateAdvertServiceInput) {
 
         UpdateAdvertServiceOutput result = new UpdateAdvertServiceOutput();
-        try{
-
-            ServiceAdvertDto existAdvert = AdvertRepository
-                    .getAdvertWithAdvertId(
-                            updateAdvertServiceInput.getAdvertID());
-            if (existAdvert == null) {
-                throw new BusinessException(AdvertExceptions.ADVERT_NOT_FOUND);
-            }
-            ServiceAdvertDto filledAdvert = AdvertRepository
-                    .getAdvertWithProviderIdAndTime(existAdvert.getServiceProviderID(),
-                            updateAdvertServiceInput.getAdvertCreateTime());
-            if (filledAdvert != null && (!filledAdvert.getAdvertID().equals(updateAdvertServiceInput.getAdvertID()))) {
-                throw new BusinessException(AdvertExceptions.TIME_IS_FILLED_ALREADY);
-            }
-
-            if (!AdvertUtils.checkServiceStatusChange(existAdvert.getServiceStatus(),
-                    updateAdvertServiceInput.getServiceStatus())) {
-                throw new BusinessException(AdvertExceptions.STATUS_CHANGE_NOT_VALID);
-            }
-            Boolean success = AdvertRepository.updateAdvert(updateAdvertServiceInput.getAdvertName(),
-                    updateAdvertServiceInput.getAdvertID(),
-                    updateAdvertServiceInput.getSummary(),
-                    updateAdvertServiceInput.getAdvertCreateTime(),
-                    updateAdvertServiceInput.getMinPrice(),
-                    updateAdvertServiceInput.getCity(),
-                    updateAdvertServiceInput.getCategory());
-
-            result.setIsSucceeded(success);
+//        try{
+//
+//            ServiceAdvertDto existAdvert = AdvertRepository
+//                    .getAdvertWithAdvertId(
+//                            updateAdvertServiceInput.getAdvertID());
+//            if (existAdvert == null) {
+//                throw new BusinessException(AdvertExceptions.ADVERT_NOT_FOUND);
+//            }
+//            ServiceAdvertDto filledAdvert = AdvertRepository
+//                    .getAdvertWithProviderIdAndTime(existAdvert.getServiceProviderID(),
+//                            updateAdvertServiceInput.getAdvertCreateTime());
+//            if (filledAdvert != null && (!filledAdvert.getAdvertID().equals(updateAdvertServiceInput.getAdvertID()))) {
+//                throw new BusinessException(AdvertExceptions.TIME_IS_FILLED_ALREADY);
+//            }
+//
+//            if (!AdvertUtils.checkServiceStatusChange(existAdvert.getServiceStatus(),
+//                    updateAdvertServiceInput.getServiceStatus())) {
+//                throw new BusinessException(AdvertExceptions.STATUS_CHANGE_NOT_VALID);
+//            }
+//            Boolean success = AdvertRepository.updateAdvert(updateAdvertServiceInput.getAdvertName(),
+//                    updateAdvertServiceInput.getAdvertID(),
+//                    updateAdvertServiceInput.getSummary(),
+//                    updateAdvertServiceInput.getAdvertCreateTime(),
+//                    updateAdvertServiceInput.getMinPrice(),
+//                    updateAdvertServiceInput.getCity(),
+//                    updateAdvertServiceInput.getCategory());
+//
+//            result.setIsSucceeded(success);
             result.setErrorCode(0L);
             result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
             return result;
 
 
-        }catch (BusinessException businessException) {
-            result.setIsSucceeded(false);
-            result.setErrorCode(businessException.getErrorCode());
-            result.setErrorMessage(businessException.getErrorMessage());
-            return result;
-        }
-        catch (Exception exception) {
-            result.setIsSucceeded(false);
-            result.setErrorCode(99999L);
-            result.setErrorMessage(exception.getMessage());
-            return result;
-        }
+//        }catch (BusinessException businessException) {
+//            result.setIsSucceeded(false);
+//            result.setErrorCode(businessException.getErrorCode());
+//            result.setErrorMessage(businessException.getErrorMessage());
+//            return result;
+//        }
+//        catch (Exception exception) {
+//            result.setIsSucceeded(false);
+//            result.setErrorCode(99999L);
+//            result.setErrorMessage(exception.getMessage());
+//            return result;
+//        }
     }
 
     @Override
@@ -110,16 +122,15 @@ public class AdvertServiceImpl implements AdvertService {
         DeleteAdvertServiceOutput result = new DeleteAdvertServiceOutput();
 
         try{
-            ServiceAdvertDto existAdvert = AdvertRepository
-                    .getAdvertWithAdvertId(
-                            deleteAdvertServiceInput.getAdvertID());
-            if (existAdvert == null) {
+            Optional<AdvertDto> existAdvert = AdvertRepository
+                    .findById(deleteAdvertServiceInput.getAdvertID());
+            if (existAdvert.isEmpty()) {
                 throw new BusinessException(AdvertExceptions.ADVERT_NOT_FOUND);
             }
 
-            Boolean success = AdvertRepository.deleteAdvert(deleteAdvertServiceInput.getAdvertID());
+            AdvertRepository.delete(existAdvert.get());
 
-            result.setIsSucceeded(success);
+            result.setIsSucceeded(true);
             result.setErrorCode(0L);
             result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
             return result;
@@ -136,46 +147,46 @@ public class AdvertServiceImpl implements AdvertService {
     public ListAdvertServiceOutput listAdvert(ListAdvertServiceInput listAdvertServiceInput) {
         ListAdvertServiceOutput result = new ListAdvertServiceOutput();
         List<AdvertDetailsDto> AdvertDetailsList = null;
-        try{
-            if ((listAdvertServiceInput.getAdvertID() != null)
-                    && (listAdvertServiceInput.getServiceProviderID() != null)
-                    && (listAdvertServiceInput.getServiceStatus() != null)
-                    && (listAdvertServiceInput.getMinPrice() != null)) {
-                AdvertDetailsList = AdvertRepository.listAdvert(listAdvertServiceInput.getServiceProviderID(),
-                        listAdvertServiceInput.getAdvertID(),
-                        listAdvertServiceInput.getMinPrice());
-
-            }else if ((listAdvertServiceInput.getAdvertID() != null)
-                    && (listAdvertServiceInput.getServiceStatus() != null)) {
-                AdvertDetailsList = AdvertRepository.listAdvertWithAdvertAndStat(listAdvertServiceInput.getAdvertID());
-
-            }else if ((listAdvertServiceInput.getServiceProviderID() != null)
-                    && (listAdvertServiceInput.getServiceStatus() != null)) {
-                AdvertDetailsList = AdvertRepository.listAdvertWithProviderAndStat(
-                        listAdvertServiceInput.getServiceProviderID());
-
-
-            }else if (listAdvertServiceInput.getServiceProviderID() != null) {
-                AdvertDetailsList = AdvertRepository.listAdvertWithProvider(listAdvertServiceInput.getServiceProviderID());
-
-            }else {
-                throw new BusinessException(AdvertExceptions.BAD_LIST_ADVERT_REQUEST);
-            }
+//        try{
+//            if ((listAdvertServiceInput.getAdvertID() != null)
+//                    && (listAdvertServiceInput.getServiceProviderID() != null)
+//                    && (listAdvertServiceInput.getServiceStatus() != null)
+//                    && (listAdvertServiceInput.getMinPrice() != null)) {
+//                AdvertDetailsList = AdvertRepository.listAdvert(listAdvertServiceInput.getServiceProviderID(),
+//                        listAdvertServiceInput.getAdvertID(),
+//                        listAdvertServiceInput.getMinPrice());
+//
+//            }else if ((listAdvertServiceInput.getAdvertID() != null)
+//                    && (listAdvertServiceInput.getServiceStatus() != null)) {
+//                AdvertDetailsList = AdvertRepository.listAdvertWithAdvertAndStat(listAdvertServiceInput.getAdvertID());
+//
+//            }else if ((listAdvertServiceInput.getServiceProviderID() != null)
+//                    && (listAdvertServiceInput.getServiceStatus() != null)) {
+//                AdvertDetailsList = AdvertRepository.listAdvertWithProviderAndStat(
+//                        listAdvertServiceInput.getServiceProviderID());
+//
+//
+//            }else if (listAdvertServiceInput.getServiceProviderID() != null) {
+//                AdvertDetailsList = AdvertRepository.listAdvertWithProvider(listAdvertServiceInput.getServiceProviderID());
+//
+//            }else {
+//                throw new BusinessException(AdvertExceptions.BAD_LIST_ADVERT_REQUEST);
+//            }
             result.setAdvertDetailsList(AdvertDetailsList);
             result.setErrorCode(0L);
             result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
             return result;
-        }catch (BusinessException businessException) {
-
-            result.setErrorCode(businessException.getErrorCode());
-            result.setErrorMessage(businessException.getErrorMessage());
-            return result;
-        }
-        catch (Exception exception) {
-            result.setErrorCode(99999L);
-            result.setErrorMessage(exception.getMessage());
-            return result;
-        }
+//        }catch (BusinessException businessException) {
+//
+//            result.setErrorCode(businessException.getErrorCode());
+//            result.setErrorMessage(businessException.getErrorMessage());
+//            return result;
+//        }
+//        catch (Exception exception) {
+//            result.setErrorCode(99999L);
+//            result.setErrorMessage(exception.getMessage());
+//            return result;
+//        }
     }
 
 }

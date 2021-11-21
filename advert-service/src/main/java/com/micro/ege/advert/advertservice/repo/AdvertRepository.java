@@ -1,41 +1,17 @@
 package com.micro.ege.advert.advertservice.repo;
 
-import com.micro.ege.advert.advertservice.dto.CreateAdvertDto;
-import com.micro.ege.advert.advertservice.dto.ListAdvertDto;
-import com.micro.ege.advert.advertservice.dto.ServiceAdvertDto;
-import com.micro.ege.advert.advertservice.dto.AdvertDetailsDto;
+import com.micro.ege.advert.advertservice.dto.AdvertDto;
+import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AdvertRepository {
-    ServiceAdvertDto getAdvertWithAdvertId(String AdvertID);
+public interface AdvertRepository extends CrudRepository<AdvertDto,String> {
 
-    ServiceAdvertDto getAdvertWithProviderId(String serviceProviderID);
+    List<AdvertDto> findByCategory(String Category);
 
-    Boolean createAdvert(CreateAdvertDto createAdvertDto);
+    List<AdvertDto> findByServiceProviderID(String serviceProviderID);
 
-    Boolean updateAdvert(String AdvertName , String AdvertID, String Summary,Integer advertCreateTime, Integer minPrice, String category, String city);
-
-    Boolean deleteAdvert(String AdvertID);
-
-
-    List<AdvertDetailsDto> listAdvertWithProvider(String providerId);
-
-    List<AdvertDetailsDto> listAdvertWithCategory(String category);
-
-    List<AdvertDetailsDto> listAdvertWithCity(String city);
-
-    List<AdvertDetailsDto> listAdvertWithName(String advertName);
-
-    List<AdvertDetailsDto> listAdvert(String providerId, String advertId, Integer minPrice);
-
-
-    ServiceAdvertDto getAdvertWithProviderIdAndTime(String serviceProviderID, Integer advertCreateTime);
-
-    List<AdvertDetailsDto> listAdvertWithAdvertAndStat(String advertID);
-
-    List<AdvertDetailsDto> listAdvertWithPrice(Integer minPrice);
-
-
-    List<AdvertDetailsDto> listAdvertWithProviderAndStat(String serviceProviderID);
+    AdvertDto findByServiceProviderIDAndAdvertCreateTime(String serviceProviderID,
+                                                         LocalDateTime advertCreateTime);
 }

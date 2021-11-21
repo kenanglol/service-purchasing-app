@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @Schema(description = "Request that used in creating an Advert")
@@ -22,7 +23,7 @@ public class CreateAdvertRequest {
 
     @NotNull(message = "Service Advert Date is not null")
     @Schema(description = "Advert Create Date(YYYYMMDDHH)", example = "2021060712", required = true)
-    private Integer advertCreateTime;
+    private LocalDateTime advertCreateTime;
 
     @NotNull(message = "Service Advert Minimum Price is not null")
     @Schema(description = "Service Advert Minimum Price", example = "50", required = true)
