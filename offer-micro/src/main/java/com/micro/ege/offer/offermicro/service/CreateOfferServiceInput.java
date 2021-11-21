@@ -2,11 +2,13 @@ package com.micro.ege.offer.offermicro.service;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class CreateOfferServiceInput {
     private String serviceProviderID;
     private String advertID;
     private String freeText;
     private Short serviceStatus;
-    private Integer offerTime;
+    private LocalDateTime session;
 }

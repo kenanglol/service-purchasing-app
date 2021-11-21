@@ -1,20 +1,26 @@
 package com.micro.ege.offer.offermicro.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
+@Table(name = "offer")
 public class OfferDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "offer_id")
     private String offerID;
+    @Column(name = "provider_id")
     private String serviceProviderID;
+    @Column(name = "advert_id")
     private String advertID;
+    @Column(name = "conditions")
     private String freeText;
+    @Column(name = "status")
     private Short serviceStatus;
-    private Integer offerTime;
+    @Column(name = "session")
+    private LocalDateTime session;
 
     public String getOfferID() {
         return offerID;
@@ -56,11 +62,11 @@ public class OfferDto {
         this.serviceStatus = serviceStatus;
     }
 
-    public Integer getOfferTime() {
-        return offerTime;
+    public LocalDateTime getSession() {
+        return session;
     }
 
-    public void setOfferTime(Integer offerTime) {
-        this.offerTime = offerTime;
+    public void setSession(LocalDateTime session) {
+        this.session = session;
     }
 }

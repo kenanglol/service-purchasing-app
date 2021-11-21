@@ -19,8 +19,4 @@ public class UpdateOfferRequest {
     @NotNull(message = "Service Offer Status is not null")
     @Schema(description = "Service Offer Status", example = "2", required = true)
     private Short serviceStatus;
-
-    @NotNull(message = "Service Offer Date is not null")
-    @Schema(description = "Service Offer Date(YYYYMMDDHH)", example = "20210060712", required = true)
-    private Integer offerTime;
 }

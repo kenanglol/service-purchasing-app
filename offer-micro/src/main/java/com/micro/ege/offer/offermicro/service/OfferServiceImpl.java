@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.micro.ege.offer.offermicro.core.constant.OfferMicroConstants.PROCESS_SUCCEED;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +32,7 @@ public class OfferServiceImpl implements OfferService{
             ServiceOfferDto existOffer = offerRepository
                     .getOfferWithProviderIdAndTime(
                             createOfferServiceInput.getServiceProviderID(),
-                            createOfferServiceInput.getOfferTime());
+                            createOfferServiceInput.getSession());
             if (existOffer != null) {
                 throw new BusinessException(OfferExceptions.TIME_IS_FILLED_ALREADY);
             }
@@ -38,11 +41,12 @@ public class OfferServiceImpl implements OfferService{
             offerDto.setAdvertID(createOfferServiceInput.getAdvertID());
             offerDto.setFreeText(createOfferServiceInput.getFreeText());
             offerDto.setServiceStatus(createOfferServiceInput.getServiceStatus());
-            offerDto.setOfferTime(createOfferServiceInput.getOfferTime());
+            offerDto.setSession(createOfferServiceInput.getSession());
+            offerRepository.save(offerDto);
 
-            result.setIsSucceeded(offerRepository.createOffer(offerDto));
+            result.setIsSucceeded(true);
             result.setErrorCode(0L);
-            result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
+            result.setErrorMessage(PROCESS_SUCCEED);
             return result;
 
         } catch (BusinessException businessException) {
@@ -58,38 +62,29 @@ public class OfferServiceImpl implements OfferService{
     public UpdateOfferServiceOutput updateOffer(UpdateOfferServiceInput updateOfferServiceInput) {
 
         UpdateOfferServiceOutput result = new UpdateOfferServiceOutput();
+
         try{
             if (updateOfferServiceInput.getServiceStatus()<0 || updateOfferServiceInput.getServiceStatus()>6) {
                 throw new BusinessException(OfferExceptions.OFFER_STATUS_NOT_FOUND);
             }
 
-            ServiceOfferDto existOffer = offerRepository
-                    .getOfferWithOfferId(
-                            updateOfferServiceInput.getOfferID());
-            if (existOffer == null) {
+            Optional<OfferDto> existOffer = offerRepository.findById(updateOfferServiceInput.getOfferID());
+            if (existOffer.isEmpty()) {
                 throw new BusinessException(OfferExceptions.OFFER_NOT_FOUND);
             }
-            ServiceOfferDto filledOffer = offerRepository
-                    .getOfferWithProviderIdAndTime(existOffer.getServiceProviderID(),
-                            updateOfferServiceInput.getOfferTime());
-            if (filledOffer != null && (!filledOffer.getOfferID().equals(updateOfferServiceInput.getOfferID()))) {
-                throw new BusinessException(OfferExceptions.TIME_IS_FILLED_ALREADY);
-            }
-
-            if (!OfferUtils.checkServiceStatusChange(existOffer.getServiceStatus(),
+            OfferDto updateOffer = existOffer.get();
+            if (!OfferUtils.checkServiceStatusChange(updateOffer.getServiceStatus(),
                     updateOfferServiceInput.getServiceStatus())) {
                 throw new BusinessException(OfferExceptions.STATUS_CHANGE_NOT_VALID);
             }
-            Boolean success = offerRepository.updateOffer(updateOfferServiceInput.getOfferID(),
-                    updateOfferServiceInput.getFreeText(),
-                    updateOfferServiceInput.getServiceStatus(),
-                    updateOfferServiceInput.getOfferTime());
+            updateOffer.setServiceStatus(updateOfferServiceInput.getServiceStatus());
+            updateOffer.setFreeText(updateOfferServiceInput.getFreeText());
+            offerRepository.save(existOffer.get());
 
-            result.setIsSucceeded(success);
+            result.setIsSucceeded(true);
             result.setErrorCode(0L);
-            result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
+            result.setErrorMessage(PROCESS_SUCCEED);
             return result;
-
 
         }catch (BusinessException businessException) {
             result.setIsSucceeded(false);
@@ -110,18 +105,16 @@ public class OfferServiceImpl implements OfferService{
         DeleteOfferServiceOutput result = new DeleteOfferServiceOutput();
 
         try{
-            ServiceOfferDto existOffer = offerRepository
-                    .getOfferWithOfferId(
-                            deleteOfferServiceInput.getOfferID());
-            if (existOffer == null) {
+            Optional<OfferDto> existOffer = offerRepository.findById(deleteOfferServiceInput.getOfferID());
+            if (existOffer.isEmpty()) {
                 throw new BusinessException(OfferExceptions.OFFER_NOT_FOUND);
             }
 
-            Boolean success = offerRepository.deleteOffer(deleteOfferServiceInput.getOfferID());
+            offerRepository.deleteById(deleteOfferServiceInput.getOfferID());
 
-            result.setIsSucceeded(success);
+            result.setIsSucceeded(true);
             result.setErrorCode(0L);
-            result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
+            result.setErrorMessage(PROCESS_SUCCEED);
             return result;
         }
         catch (Exception exception) {
@@ -165,7 +158,7 @@ public class OfferServiceImpl implements OfferService{
             }
             result.setOfferDetailsList(offerDetailsList);
             result.setErrorCode(0L);
-            result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
+            result.setErrorMessage(PROCESS_SUCCEED);
             return result;
         }catch (BusinessException businessException) {
 

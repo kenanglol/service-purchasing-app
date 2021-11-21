@@ -12,7 +12,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-11-21T23:25:43+0300",
+    date = "2021-11-22T00:22:05+0300",
     comments = "version: 1.4.1.Final, compiler: javac, environment: Java 11.0.7 (AdoptOpenJDK)"
 )
 public class AdvertMapperImpl implements AdvertMapper {

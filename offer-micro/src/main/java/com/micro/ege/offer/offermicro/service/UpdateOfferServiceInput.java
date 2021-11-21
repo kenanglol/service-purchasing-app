@@ -7,5 +7,4 @@ public class UpdateOfferServiceInput {
     private String offerID;
     private String freeText;
     private Short serviceStatus;
-    private Integer offerTime;
 }
