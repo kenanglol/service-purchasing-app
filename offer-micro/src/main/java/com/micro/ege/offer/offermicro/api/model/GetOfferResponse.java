@@ -1,4 +1,4 @@
-package com.micro.ege.offer.offermicro.api;
+package com.micro.ege.offer.offermicro.api.model;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.micro.ege.offer.offermicro.api;
+package com.micro.ege.offer.offermicro.api.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

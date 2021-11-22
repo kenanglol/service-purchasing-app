@@ -1,9 +1,7 @@
-package com.micro.ege.offer.offermicro.api;
+package com.micro.ege.offer.offermicro.api.model;
 
 import com.micro.ege.offer.offermicro.core.constant.OfferMicroConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
-package com.micro.ege.offer.offermicro.api;
+package com.micro.ege.offer.offermicro.api.model;
 
-import com.micro.ege.offer.offermicro.dto.OfferDetails;
+import com.micro.ege.offer.offermicro.dto.OfferDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -12,5 +12,5 @@ import java.util.List;
 public class ListOfferResponse extends BaseResponse {
 
     @Schema(description = "Offer Details List", required = true)
-    private List<OfferDetails> offerDetailsList;
+    private List<OfferDto> offerDetailsList;
 }

@@ -1,9 +1,4 @@
-SELECT "OFFER_ID" AS offerID,
-       "PROVIDER_ID" AS serviceProviderID,
-       "ADVERT_ID" AS advertID,
-       "FREE_TEXT" AS freeText,
-       "SERVICE_STATUS" AS serviceStatus,
-       "OFFER_TIME" AS offerTime
-FROM "OFFER"
-WHERE "PROVIDER_ID" = :serviceProviderID
-  AND "OFFER_TIME" = :offerTime;
+SELECT OFFER_ID AS offerID,CUSTOMER_ID AS customerID,PROVIDER_ID AS serviceProviderID,
+       ADVERT_ID AS advertID,CONDITIONS AS freeText,STATUS AS serviceStatus,SESSION AS session
+FROM OFFER
+WHERE PROVIDER_ID = ?1 AND SESSION = ?2

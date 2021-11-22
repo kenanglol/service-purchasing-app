@@ -1,17 +1,16 @@
 package com.micro.ege.offer.offermicro.repo;
 
 import com.micro.ege.offer.offermicro.dto.OfferDto;
-import com.micro.ege.offer.offermicro.dto.OfferDetails;
-import com.micro.ege.offer.offermicro.dto.ServiceOfferDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
 
 public interface OfferRepository extends JpaRepository<OfferDto,String> {
-//    @Query("")
-//    OfferDto getOfferWithProviderIdAndTime(String serviceProviderID, Integer Time);
+    @Query( value = "SELECT OFFER_ID AS offerID,CUSTOMER_ID AS customerID,PROVIDER_ID AS serviceProviderID,\n" +
+            "       ADVERT_ID AS advertID,CONDITIONS AS freeText,STATUS AS serviceStatus,SESSION AS session\n" +
+            "FROM OFFER\n" +
+            "WHERE PROVIDER_ID = ?1 AND SESSION = ?2",
+    nativeQuery = true)
+    OfferDto getOfferWithProviderIdAndTime(String providerId, Long session);
 //
 //    List<OfferDto> listOfferWithAdvert(String advertId);
 //

@@ -1,15 +1,11 @@
 package com.micro.ege.offer.offermicro.service;
 
-import com.micro.ege.offer.offermicro.api.CreateOfferRequest;
-import com.micro.ege.offer.offermicro.api.ManipulationResponse;
-import com.micro.ege.offer.offermicro.api.UpdateOfferRequest;
+import com.micro.ege.offer.offermicro.api.model.*;
 import com.micro.ege.offer.offermicro.core.exception.BusinessException;
 import com.micro.ege.offer.offermicro.core.exception.OfferExceptions;
 import com.micro.ege.offer.offermicro.core.utils.OfferUtils;
 import com.micro.ege.offer.offermicro.dto.OfferDto;
-import com.micro.ege.offer.offermicro.dto.ServiceOfferDto;
 import com.micro.ege.offer.offermicro.repo.OfferRepository;
-import com.micro.ege.offer.offermicro.service.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,7 +26,7 @@ public class OfferServiceImpl implements OfferService{
             if (createOfferRequest.getServiceStatus()<0 || createOfferRequest.getServiceStatus()>6) {
                 throw new BusinessException(OfferExceptions.OFFER_STATUS_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
-            ServiceOfferDto existOffer = offerRepository.getOfferWithProviderIdAndTime(
+            OfferDto existOffer = offerRepository.getOfferWithProviderIdAndTime(
                             createOfferRequest.getServiceProviderID(),
                             createOfferRequest.getSession());
             if (existOffer != null) {
@@ -117,7 +113,7 @@ public class OfferServiceImpl implements OfferService{
     }
 
     @Override
-    public ListOfferServiceOutput listOffer(ListOfferServiceInput listOfferServiceInput) {
+    public ListOfferResponse listOffer(ListOfferRequest listOfferRequest) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 package com.micro.ege.offer.offermicro.core.exception;
 
-import com.micro.ege.offer.offermicro.api.BaseResponse;
+import com.micro.ege.offer.offermicro.api.model.BaseResponse;
 import lombok.Data;
 
 @Data

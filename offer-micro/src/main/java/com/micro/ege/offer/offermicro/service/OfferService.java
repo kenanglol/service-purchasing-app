@@ -1,11 +1,8 @@
 package com.micro.ege.offer.offermicro.service;
 
-import com.micro.ege.offer.offermicro.api.CreateOfferRequest;
-import com.micro.ege.offer.offermicro.api.ManipulationResponse;
-import com.micro.ege.offer.offermicro.api.UpdateOfferRequest;
+import com.micro.ege.offer.offermicro.api.model.*;
 import com.micro.ege.offer.offermicro.core.exception.BusinessException;
 import com.micro.ege.offer.offermicro.dto.OfferDto;
-import com.micro.ege.offer.offermicro.service.model.*;
 
 public interface OfferService {
     ManipulationResponse createOffer(CreateOfferRequest createOfferRequest);
@@ -14,7 +11,7 @@ public interface OfferService {
 
     ManipulationResponse deleteOffer(String offerId);
 
-    ListOfferServiceOutput listOffer(ListOfferServiceInput listOfferServiceInput);
+    ListOfferResponse listOffer(ListOfferRequest listOfferRequest);
 
     OfferDto getOffer(String offerId) throws BusinessException;
 }

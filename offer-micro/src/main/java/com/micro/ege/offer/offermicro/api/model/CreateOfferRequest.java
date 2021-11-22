@@ -1,4 +1,4 @@
-package com.micro.ege.offer.offermicro.api;
+package com.micro.ege.offer.offermicro.api.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -26,8 +26,8 @@ public class CreateOfferRequest {
     @Schema(description = "Service Offer Status", example = "2", required = true)
     private Short serviceStatus;
 
-    @NotNull(message = "Service Offer Date is not null")
-    @Schema(description = "Service Offer Time", example = "1986-04-08 12:30", required = true)
-    private LocalDateTime session;
+    @NotNull(message = "Service Offer DateTime is not null")
+    @Schema(description = "Service Offer DateTime", example = "198604110900", required = true)
+    private Long session;
 
 }

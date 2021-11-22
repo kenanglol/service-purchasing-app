@@ -1,9 +1,8 @@
 package com.micro.ege.offer.offermicro.api;
 
 
+import com.micro.ege.offer.offermicro.api.model.*;
 import com.micro.ege.offer.offermicro.core.exception.BusinessException;
-import com.micro.ege.offer.offermicro.core.exception.OfferExceptions;
-import com.micro.ege.offer.offermicro.dto.OfferDto;
 import com.micro.ege.offer.offermicro.service.OfferService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class OfferController {
 
     private final OfferService offerService;
-    private final OfferMapper offerMapper;
     public OfferController(OfferService offerService) {
-        this.offerMapper = Mappers.getMapper(OfferMapper.class);
         this.offerService = offerService;
     }
 
@@ -72,8 +69,6 @@ public class OfferController {
     public ResponseEntity<ListOfferResponse> listOffer(
             @Parameter(description = "Request object for list",required = true)
             @RequestBody ListOfferRequest listOfferRequest) {
-        return new ResponseEntity<>(offerMapper.mapServiceOutputToApiResponse(
-                offerService.listOffer(offerMapper.mapApiRequestToServiceInput(
-                        listOfferRequest))), HttpStatus.OK);
+        return new ResponseEntity<>(offerService.listOffer(listOfferRequest), HttpStatus.OK);
     }
 }

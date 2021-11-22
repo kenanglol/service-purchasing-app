@@ -13,6 +13,8 @@ public class OfferDto {
     private String offerID;
     @Column(name = "provider_id")
     private String serviceProviderID;
+    @Column(name = "csutomer_id")
+    private String customerID;
     @Column(name = "advert_id")
     private String advertID;
     @Column(name = "conditions")
@@ -20,7 +22,7 @@ public class OfferDto {
     @Column(name = "status")
     private Short serviceStatus;
     @Column(name = "session")
-    private LocalDateTime session;
+    private Long session;
 
     public String getOfferID() {
         return offerID;
@@ -36,6 +38,14 @@ public class OfferDto {
 
     public void setServiceProviderID(String serviceProviderID) {
         this.serviceProviderID = serviceProviderID;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
     public String getAdvertID() {
@@ -62,11 +72,11 @@ public class OfferDto {
         this.serviceStatus = serviceStatus;
     }
 
-    public LocalDateTime getSession() {
+    public Long getSession() {
         return session;
     }
 
-    public void setSession(LocalDateTime session) {
+    public void setSession(Long session) {
         this.session = session;
     }
 }
