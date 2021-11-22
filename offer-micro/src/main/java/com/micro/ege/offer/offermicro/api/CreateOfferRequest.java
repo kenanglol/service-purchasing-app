@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Schema(description = "Request that used in creating an Offer")
 @Data
@@ -26,7 +27,7 @@ public class CreateOfferRequest {
     private Short serviceStatus;
 
     @NotNull(message = "Service Offer Date is not null")
-    @Schema(description = "Service Offer Date(YYYYMMDDHH)", example = "20210060712", required = true)
-    private Integer offerTime;
+    @Schema(description = "Service Offer Time", example = "1986-04-08 12:30", required = true)
+    private LocalDateTime session;
 
 }

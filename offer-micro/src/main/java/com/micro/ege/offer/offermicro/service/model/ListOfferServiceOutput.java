@@ -1,4 +1,4 @@
-package com.micro.ege.offer.offermicro.service;
+package com.micro.ege.offer.offermicro.service.model;
 
 import com.micro.ege.offer.offermicro.dto.OfferDetails;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,15 +1,14 @@
 package com.micro.ege.offer.offermicro.api;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
-@Schema(description = "Response that used in creating an Offer")
 @Data
-public class CreateOfferResponse {
-
-    @Schema(description = "Is Succeeded", example = "true", required = true)
-    private Boolean isSucceeded;
+@AllArgsConstructor
+@NoArgsConstructor
+public class BaseResponse {
 
     @Schema(description = "Error Code", example = "11545L", required = true)
     private Long errorCode;

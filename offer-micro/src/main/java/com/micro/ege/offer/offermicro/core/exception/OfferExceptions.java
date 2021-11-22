@@ -1,6 +1,9 @@
 package com.micro.ege.offer.offermicro.core.exception;
 
+import lombok.Getter;
+
 public class OfferExceptions {
+
     public static ExceptionData OFFER_STATUS_NOT_FOUND = new ExceptionData(1L,
             "Hizmet statüsü bulunamadı.");
 

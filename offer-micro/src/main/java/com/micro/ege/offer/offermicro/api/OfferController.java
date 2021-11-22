@@ -1,6 +1,9 @@
 package com.micro.ege.offer.offermicro.api;
 
 
+import com.micro.ege.offer.offermicro.core.exception.BusinessException;
+import com.micro.ege.offer.offermicro.core.exception.OfferExceptions;
+import com.micro.ege.offer.offermicro.dto.OfferDto;
 import com.micro.ege.offer.offermicro.service.OfferService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,34 +29,41 @@ public class OfferController {
     @Operation(summary = "Create Offer",description = "Create Offer")
     @ApiResponse(responseCode = "201", description = "Create Offer Response")
     @PostMapping(path = "/create")
-    public ResponseEntity<CreateOfferResponse> createOffer(
+    public ResponseEntity<ManipulationResponse> createOffer(
             @Parameter(description = "Request object for create",required = true)
             @RequestBody CreateOfferRequest createOfferRequest) {
-        return new ResponseEntity<>(offerMapper.mapServiceOutputToApiResponse(
-                offerService.createOffer(offerMapper.mapApiRequestToServiceInput(
-                        createOfferRequest))), HttpStatus.CREATED);
+        return new ResponseEntity<>(offerService.createOffer(createOfferRequest), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update Offer",description = "Update Offer")
     @ApiResponse(responseCode = "200", description = "Update Offer Response")
     @PutMapping(path = "/update")
-    public ResponseEntity<UpdateOfferResponse> updateOffer(
+    public ResponseEntity<ManipulationResponse> updateOffer(
             @Parameter(description = "Request object for update",required = true)
             @RequestBody UpdateOfferRequest updateOfferRequest) {
-        return new ResponseEntity<>(offerMapper.mapServiceOutputToApiResponse(
-                offerService.updateOffer(offerMapper.mapApiRequestToServiceInput(
-                        updateOfferRequest))), HttpStatus.OK);
+        return new ResponseEntity<>(offerService.updateOffer(updateOfferRequest), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete Offer",description = "Delete Offer")
     @ApiResponse(responseCode = "200", description = "Delete Offer Response")
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<DeleteOfferResponse> deleteOffer(
+    public ResponseEntity<ManipulationResponse> deleteOffer(
             @Parameter(description = "Request object for delete",required = true)
-            @RequestBody DeleteOfferRequest deleteOfferRequest) {
-        return new ResponseEntity<>(offerMapper.mapServiceOutputToApiResponse(
-                offerService.deleteOffer(offerMapper.mapApiRequestToServiceInput(
-                        deleteOfferRequest))), HttpStatus.OK);
+            @RequestBody String offerId) {
+        return new ResponseEntity<>(offerService.deleteOffer(offerId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get Offer",description = "Get Offer")
+    @ApiResponse(responseCode = "200", description = "Get Offer Response")
+    @GetMapping(path = "/get")
+    public ResponseEntity getOffer(
+            @Parameter(description = "Request object for getting",required = true)
+            @RequestBody String offerId) {
+        try{
+            return new ResponseEntity<>(offerService.getOffer(offerId), HttpStatus.OK);
+        } catch (BusinessException e) {
+            return new ResponseEntity<>(e.convertResponse(), e.getStatus());
+        }
     }
 
     @Operation(summary = "List Offer",description = "List Offer")
