@@ -12,11 +12,15 @@ public class CreateOfferRequest {
 
     @NotNull(message = "Service Provider ID is not null")
     @Schema(description = "Service Provider ID", example = "12345678910", required = true)
-    private String serviceProviderID;
+    private Long serviceProviderID;
+
+    @NotNull(message = "Customer ID is not null")
+    @Schema(description = "Customer ID", example = "12345678910", required = true)
+    private Long customerID;
 
     @NotNull(message = "Advert ID is not null")
     @Schema(description = "Advert ID", example = "12345678910", required = true)
-    private String advertID;
+    private Long advertID;
 
     @NotNull(message = "Service Condition Text is not null")
     @Schema(description = "Service Condition Text", example = "Service conditions", required = true)

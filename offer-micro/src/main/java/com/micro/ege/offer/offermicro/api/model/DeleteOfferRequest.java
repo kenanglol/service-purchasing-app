@@ -10,5 +10,5 @@ import javax.validation.constraints.NotNull;
 public class DeleteOfferRequest {
     @NotNull(message = "Offer ID is not null")
     @Schema(description = "Offer ID", example = "12345678910", required = true)
-    private String offerID;
+    private Long offerID;
 }

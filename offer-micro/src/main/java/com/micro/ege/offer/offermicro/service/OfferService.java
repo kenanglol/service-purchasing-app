@@ -9,9 +9,9 @@ public interface OfferService {
 
     ManipulationResponse updateOffer(UpdateOfferRequest updateOfferRequest);
 
-    ManipulationResponse deleteOffer(String offerId);
+    ManipulationResponse deleteOffer(Long offerId);
 
     ListOfferResponse listOffer(ListOfferRequest listOfferRequest);
 
-    OfferDto getOffer(String offerId) throws BusinessException;
+    OfferDto getOffer(Long offerId) throws BusinessException;
 }

@@ -1,22 +1,20 @@
 package com.micro.ege.offer.offermicro.dto;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
-@Table(name = "offer")
+@Table(name = "offer", schema = "public")
 public class OfferDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "offer_id")
-    private String offerID;
+    private Long offerID;
     @Column(name = "provider_id")
-    private String serviceProviderID;
-    @Column(name = "csutomer_id")
-    private String customerID;
+    private Long serviceProviderID;
+    @Column(name = "customer_id")
+    private Long customerID;
     @Column(name = "advert_id")
-    private String advertID;
+    private Long advertID;
     @Column(name = "conditions")
     private String freeText;
     @Column(name = "status")
@@ -24,35 +22,35 @@ public class OfferDto {
     @Column(name = "session")
     private Long session;
 
-    public String getOfferID() {
+    public Long getOfferID() {
         return offerID;
     }
 
-    public void setOfferID(String offerID) {
+    public void setOfferID(Long offerID) {
         this.offerID = offerID;
     }
 
-    public String getServiceProviderID() {
+    public Long getServiceProviderID() {
         return serviceProviderID;
     }
 
-    public void setServiceProviderID(String serviceProviderID) {
+    public void setServiceProviderID(Long serviceProviderID) {
         this.serviceProviderID = serviceProviderID;
     }
 
-    public String getCustomerID() {
+    public Long getCustomerID() {
         return customerID;
     }
 
-    public void setCustomerID(String customerID) {
+    public void setCustomerID(Long customerID) {
         this.customerID = customerID;
     }
 
-    public String getAdvertID() {
+    public Long getAdvertID() {
         return advertID;
     }
 
-    public void setAdvertID(String advertID) {
+    public void setAdvertID(Long advertID) {
         this.advertID = advertID;
     }
 

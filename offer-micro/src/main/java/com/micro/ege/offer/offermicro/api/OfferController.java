@@ -43,19 +43,19 @@ public class OfferController {
 
     @Operation(summary = "Delete Offer",description = "Delete Offer")
     @ApiResponse(responseCode = "200", description = "Delete Offer Response")
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/{offerId}")
     public ResponseEntity<ManipulationResponse> deleteOffer(
             @Parameter(description = "Request object for delete",required = true)
-            @RequestBody String offerId) {
+            @PathVariable Long offerId) {
         return new ResponseEntity<>(offerService.deleteOffer(offerId), HttpStatus.OK);
     }
 
     @Operation(summary = "Get Offer",description = "Get Offer")
     @ApiResponse(responseCode = "200", description = "Get Offer Response")
-    @GetMapping(path = "/get")
+    @GetMapping(path = "/{offerId}")
     public ResponseEntity getOffer(
             @Parameter(description = "Request object for getting",required = true)
-            @RequestBody String offerId) {
+            @PathVariable Long offerId) {
         try{
             return new ResponseEntity<>(offerService.getOffer(offerId), HttpStatus.OK);
         } catch (BusinessException e) {

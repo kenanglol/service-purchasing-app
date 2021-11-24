@@ -2,7 +2,7 @@ package com.micro.ege.user.usermicro.dto;
 
 import lombok.Data;
 
-@Data
+@Entity
 public class UserDetailDto {
     private String userId;
     private String name;
