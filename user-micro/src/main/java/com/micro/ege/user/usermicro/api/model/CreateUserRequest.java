@@ -1,4 +1,4 @@
-package com.micro.ege.user.usermicro.api;
+package com.micro.ege.user.usermicro.api.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -18,7 +18,6 @@ public class CreateUserRequest {
     @NotNull(message = "Mail Address is not null")
     @Schema(description = "Mail Address", example = "abc@gmail.com", required = true)
     private String mail;
-
 
     @NotNull(message = "Password is not null")
     @Schema(description = "Password", example = "dfh54dh5d3", required = true)

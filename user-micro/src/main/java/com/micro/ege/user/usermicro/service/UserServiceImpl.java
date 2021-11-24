@@ -6,16 +6,13 @@ import com.micro.ege.user.usermicro.core.exception.DataManipulationException;
 import com.micro.ege.user.usermicro.core.exception.DataNotFoundException;
 import com.micro.ege.user.usermicro.core.exception.UserExceptions;
 import com.micro.ege.user.usermicro.dto.CreateUserDto;
-import com.micro.ege.user.usermicro.dto.UserDetailDto;
 import com.micro.ege.user.usermicro.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
