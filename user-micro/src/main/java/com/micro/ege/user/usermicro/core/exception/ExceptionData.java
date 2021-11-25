@@ -1,10 +1,10 @@
 package com.micro.ege.user.usermicro.core.exception;
 
-public class ExceptionInfo {
+public class ExceptionData {
     Long errCode;
     String errMessage;
 
-    public ExceptionInfo(Long code, String msg) {
+    public ExceptionData(Long code, String msg) {
         this.errCode = code;
         this.errMessage = msg;
     }

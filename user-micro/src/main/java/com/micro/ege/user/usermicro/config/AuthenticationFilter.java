@@ -1,7 +1,6 @@
 package com.micro.ege.user.usermicro.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.micro.ege.user.usermicro.core.exception.DataNotFoundException;
 import com.micro.ege.user.usermicro.service.GetUserServiceInput;
 import com.micro.ege.user.usermicro.service.GetUserServiceOutput;
 import com.micro.ege.user.usermicro.service.LoginUser;

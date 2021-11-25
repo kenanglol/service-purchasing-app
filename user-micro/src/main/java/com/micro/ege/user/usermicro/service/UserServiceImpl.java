@@ -1,11 +1,11 @@
 package com.micro.ege.user.usermicro.service;
 
+import com.micro.ege.user.usermicro.api.model.CreateUserRequest;
+import com.micro.ege.user.usermicro.api.model.ManipulationResponse;
+import com.micro.ege.user.usermicro.api.model.UpdateUserRequest;
 import com.micro.ege.user.usermicro.core.constant.UserMicroConstants;
-import com.micro.ege.user.usermicro.core.exception.BussinessException;
-import com.micro.ege.user.usermicro.core.exception.DataManipulationException;
-import com.micro.ege.user.usermicro.core.exception.DataNotFoundException;
 import com.micro.ege.user.usermicro.core.exception.UserExceptions;
-import com.micro.ege.user.usermicro.dto.CreateUserDto;
+import com.micro.ege.user.usermicro.dto.UserDto;
 import com.micro.ege.user.usermicro.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-import static com.micro.ege.user.usermicro.core.exception.UserExceptions.USER_CREATE_ERROR;
+import static com.micro.ege.user.usermicro.core.exception.UserExceptions.*;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +33,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CreateUserServiceOutput createUser(CreateUserServiceInput request) throws DataManipulationException {
+    public ManipulationResponse createUser(CreateUserRequest request) throws DataManipulationException {
         CreateUserServiceOutput result = new CreateUserServiceOutput();
-        CreateUserDto createUserDto = new CreateUserDto();
-        createUserDto.setName(request.getName());
-        createUserDto.setSurname(request.getSurname());
+        UserDto createUserDto = new UserDto();
+        if (userRepository.findByMail(request.getMail()) == null) {
+            throw new BussinessException(USER_NOT_FOUND);
+        }
+        createUserDto.setFirstName(request.getFirstName());
+        createUserDto.setMiddleName(request.getMiddleName());
+        createUserDto.setSurName(request.getSurName());
+        createUserDto.getMail(request.getMail());
+        createUserDto.setFirstName(request.getFirstName());
+        createUserDto.setMiddleName(request.getMiddleName());
+        createUserDto.setFirstName(request.getFirstName());
+        createUserDto.setMiddleName(request.getMiddleName());
         createUserDto.setMail(request.getMail());
         createUserDto.setCipher(bCryptPasswordEncoder.encode(request.getCipher()));
 
@@ -54,10 +63,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetUserServiceOutput getUser(GetUserServiceInput request) throws DataNotFoundException {
+    public UserDto getUser(Long userId) throws DataNotFoundException {
 
-        GetUserServiceOutput response = new GetUserServiceOutput();
-        UserDetailDto userDetails = null;
+        UserDto response = new UserDto();
+        UserDto userDetails = null;
 
         if (request.getUserId() != null) {
            userDetails = userRepository.getUserWithId(request.getUserId());
@@ -80,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserServiceOutput updateUser(UpdateUserServiceInput request) throws BussinessException {
+    public ManipulationResponse updateUser(UpdateUserRequest request) throws BussinessException {
         UpdateUserServiceOutput response = new UpdateUserServiceOutput();
         Boolean isComplete = userRepository.updateUser(request.getUserId(), request.getName(), request.getSurname());
         if (!isComplete) {

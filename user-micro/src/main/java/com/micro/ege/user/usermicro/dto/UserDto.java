@@ -29,7 +29,7 @@ public class UserDto {
     @Column(name = "speciality")
     private String expertise;
     @Column(name = "user_score")
-    private Double user_score;
+    private Double userScore;
 
     public Long getUserId() {
         return userId;
@@ -119,11 +119,11 @@ public class UserDto {
         this.expertise = expertise;
     }
 
-    public Double getUser_score() {
-        return user_score;
+    public Double getUserScore() {
+        return userScore;
     }
 
-    public void setUser_score(Double user_score) {
-        this.user_score = user_score;
+    public void setUserScore(Double user_score) {
+        this.userScore = user_score;
     }
 }
