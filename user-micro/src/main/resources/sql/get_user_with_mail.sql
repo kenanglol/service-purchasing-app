@@ -1,2 +1,0 @@
-SELECT "USER_ID", "NAME", "SURNAME", "MAIL", "PASSWORD"
-FROM public."USER" WHERE "MAIL" = :mail

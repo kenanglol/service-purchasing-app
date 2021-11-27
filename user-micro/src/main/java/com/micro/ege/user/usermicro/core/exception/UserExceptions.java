@@ -12,4 +12,7 @@ public class UserExceptions {
 
     public static ExceptionData USER_CREATE_ERROR = new ExceptionData(3L,
             "Kullanıcı bilgileri kaydedilirken hata oluştu.");
+
+    public static ExceptionData USER_ALREADY_EXIST = new ExceptionData(3L,
+            "Mail adresi zaten kayıtlı.");
 }

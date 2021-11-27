@@ -3,6 +3,10 @@ package com.micro.ege.user.usermicro.api;
 import com.micro.ege.user.usermicro.api.model.CreateUserRequest;
 import com.micro.ege.user.usermicro.api.model.ManipulationResponse;
 import com.micro.ege.user.usermicro.api.model.UpdateUserRequest;
+import com.micro.ege.user.usermicro.core.exception.BusinessException;
+import com.micro.ege.user.usermicro.core.exception.CustomException;
+import com.micro.ege.user.usermicro.core.exception.DataManipulationException;
+import com.micro.ege.user.usermicro.core.exception.DataNotFoundException;
 import com.micro.ege.user.usermicro.dto.UserDto;
 import com.micro.ege.user.usermicro.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,7 +33,7 @@ public class UserController {
     @PostMapping(path = "/create")
     public ResponseEntity<ManipulationResponse> createUser(
             @Parameter(description = "Request object for create",required = true)
-            @RequestBody CreateUserRequest createUserRequest) throws DataManipulationException {
+            @RequestBody CreateUserRequest createUserRequest) throws CustomException {
         return new ResponseEntity<>(userService.createUser(createUserRequest), HttpStatus.CREATED);
     }
 
@@ -38,7 +42,7 @@ public class UserController {
     @GetMapping(path = "/{userId}")
     public ResponseEntity<UserDto> getUser(
             @Parameter(description = "Request object for get",required = true)
-            @PathVariable Long userId) throws DataNotFoundException {
+            @PathVariable Long userId) throws CustomException {
         return new ResponseEntity<>(userService.getUser(userId), HttpStatus.OK);
     }
 
@@ -47,8 +51,7 @@ public class UserController {
     @PutMapping(path = "/update")
     public ResponseEntity<ManipulationResponse> updateUser(
             @Parameter(description = "Request object for create",required = true)
-            @RequestBody UpdateUserRequest updateUserRequest) throws BussinessException {
+            @RequestBody UpdateUserRequest updateUserRequest) throws CustomException {
         return new ResponseEntity<>(userService.updateUser(updateUserRequest), HttpStatus.ACCEPTED);
     }
-
 }

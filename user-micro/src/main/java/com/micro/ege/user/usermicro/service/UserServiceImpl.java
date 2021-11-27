@@ -3,12 +3,12 @@ package com.micro.ege.user.usermicro.service;
 import com.micro.ege.user.usermicro.api.model.CreateUserRequest;
 import com.micro.ege.user.usermicro.api.model.ManipulationResponse;
 import com.micro.ege.user.usermicro.api.model.UpdateUserRequest;
-import com.micro.ege.user.usermicro.core.constant.UserMicroConstants;
-import com.micro.ege.user.usermicro.core.exception.UserExceptions;
+import com.micro.ege.user.usermicro.core.exception.*;
 import com.micro.ege.user.usermicro.dto.UserDto;
 import com.micro.ege.user.usermicro.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static com.micro.ege.user.usermicro.core.exception.UserExceptions.*;
 
@@ -33,83 +34,69 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ManipulationResponse createUser(CreateUserRequest request) throws DataManipulationException {
-        CreateUserServiceOutput result = new CreateUserServiceOutput();
+    public ManipulationResponse createUser(CreateUserRequest request) throws CustomException {
         UserDto createUserDto = new UserDto();
-        if (userRepository.findByMail(request.getMail()) == null) {
-            throw new BussinessException(USER_NOT_FOUND);
+        if (userRepository.findByMail(request.getMail()).isPresent()) {
+            throw new BusinessException(USER_ALREADY_EXIST);
         }
         createUserDto.setFirstName(request.getFirstName());
         createUserDto.setMiddleName(request.getMiddleName());
         createUserDto.setSurName(request.getSurName());
-        createUserDto.getMail(request.getMail());
-        createUserDto.setFirstName(request.getFirstName());
-        createUserDto.setMiddleName(request.getMiddleName());
-        createUserDto.setFirstName(request.getFirstName());
-        createUserDto.setMiddleName(request.getMiddleName());
         createUserDto.setMail(request.getMail());
-        createUserDto.setCipher(bCryptPasswordEncoder.encode(request.getCipher()));
-
-        Boolean isComplete = userRepository.createUser(createUserDto);
-        result.setIsSucceeded(isComplete);
-        if (isComplete) {
-            result.setErrorCode(UserMicroConstants.SUCCESS_CODE);
-            result.setErrorMessage(UserMicroConstants.SUCCESS_MSG);
-        } else {
-            throw new DataManipulationException(USER_CREATE_ERROR);
+        createUserDto.setProvider(request.getIsProvider());
+        if(request.getIsProvider()){
+            createUserDto.setExpertise(request.getExpertise());
+            createUserDto.setExperience(request.getExperience());
         }
+        createUserDto.setUserScore(5.0);
+        createUserDto.setLocation(request.getLocation());
+        createUserDto.setPassword(bCryptPasswordEncoder.encode(request.getCipher()));
 
-        return result;
+        userRepository.save(createUserDto);
+        return ManipulationResponse.SUCCESS_PROCESS;
     }
 
     @Override
-    public UserDto getUser(Long userId) throws DataNotFoundException {
-
-        UserDto response = new UserDto();
-        UserDto userDetails = null;
-
-        if (request.getUserId() != null) {
-           userDetails = userRepository.getUserWithId(request.getUserId());
-        } else if (request.getMail() != null){
-            userDetails = userRepository.getUserWithMail(request.getMail());
-        } else {
-            throw new DataNotFoundException(UserExceptions.GET_REQ_EMPTY);
+    public UserDto getUser(String mail) throws CustomException {
+        Optional<UserDto> user = userRepository.findByMail(mail);
+        if(user.isEmpty()){
+            throw new DataNotFoundException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
-
-        if (userDetails == null) {
-            throw new DataNotFoundException(UserExceptions.USER_NOT_FOUND);
-        }
-
-        response.setUserId(userDetails.getUserId());
-        response.setMail(userDetails.getMail());
-        response.setName(userDetails.getName());
-        response.setSurname(userDetails.getSurname());
-        return response;
-
+        return user.get();
     }
 
     @Override
-    public ManipulationResponse updateUser(UpdateUserRequest request) throws BussinessException {
-        UpdateUserServiceOutput response = new UpdateUserServiceOutput();
-        Boolean isComplete = userRepository.updateUser(request.getUserId(), request.getName(), request.getSurname());
-        if (!isComplete) {
-            throw new BussinessException(UserExceptions.USER_UPDATE_ERROR);
+    public UserDto getUser(Long userId) throws CustomException {
+        Optional<UserDto> user = userRepository.findById(userId);
+        if(user.isEmpty()){
+            throw new DataNotFoundException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
+        return user.get();
+    }
 
-        response.setIsSucceeded(true);
-        response.setErrorCode(UserMicroConstants.SUCCESS_CODE);
-        response.setErrorMessage(UserMicroConstants.SUCCESS_MSG);
-        return  response;
+    @Override
+    public ManipulationResponse updateUser(UpdateUserRequest request) throws CustomException {
+        Optional<UserDto> updateUser = userRepository.findById(request.getUserId());
+        if(updateUser.isEmpty()) {
+            throw new BusinessException(USER_NOT_FOUND);
+        }
+        UserDto user = updateUser.get();
+        user.setFirstName(request.getFirstName());
+        user.setMiddleName(request.getMiddleName());
+        user.setSurName(request.getSurName());
+        user.setLocation(request.getLocation());
+        userRepository.save(user);
+        return ManipulationResponse.SUCCESS_PROCESS;
     }
 
 
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserDetailDto userDetailDto = userRepository.getUserWithMail(s);
-        if (userDetailDto == null)  throw new UsernameNotFoundException(s);
-
-        return new User(userDetailDto.getMail(),userDetailDto.getPassword(),
+        Optional<UserDto> userDetailDto = userRepository.findByMail(s);
+        if (userDetailDto.isEmpty())  throw new UsernameNotFoundException(s);
+        UserDto user = userDetailDto.get();
+        return new User(user.getMail(),user.getPassword(),
                 true, true, true, true,
                 new ArrayList<>());
     }

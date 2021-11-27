@@ -2,7 +2,7 @@ package com.micro.ege.user.usermicro.dto;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "user")
 public class UserDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,10 +18,8 @@ public class UserDto {
     private String surName;
     @Column(name = "mail")
     private String mail;
-    @Column(name = "hash")
+    @Column(name = "password")
     private String password;
-    @Column(name = "salt")
-    private String salt;
     @Column(name = "location")
     private String location;
     @Column(name = "experience")
@@ -85,14 +83,6 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public String getLocation() {

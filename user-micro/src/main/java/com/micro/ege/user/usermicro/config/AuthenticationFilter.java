@@ -1,8 +1,9 @@
 package com.micro.ege.user.usermicro.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.micro.ege.user.usermicro.service.GetUserServiceInput;
-import com.micro.ege.user.usermicro.service.GetUserServiceOutput;
+import com.micro.ege.user.usermicro.core.exception.CustomException;
+import com.micro.ege.user.usermicro.core.exception.DataNotFoundException;
+import com.micro.ege.user.usermicro.dto.UserDto;
 import com.micro.ege.user.usermicro.service.LoginUser;
 import com.micro.ege.user.usermicro.service.UserService;
 import io.jsonwebtoken.Jwts;
@@ -63,22 +64,20 @@ public class AuthenticationFilter  extends UsernamePasswordAuthenticationFilter 
                                             Authentication authResult)
             throws IOException, ServletException {
         String username = ((User) authResult.getPrincipal()).getUsername();
-        GetUserServiceOutput result = null;
-        GetUserServiceInput input = new GetUserServiceInput();
-        input.setMail(username);
+        UserDto result = null;
         try {
-            result = userService.getUser(input);
-        } catch (DataNotFoundException e) {
-            log.error("Get user input service error : ",input);
+            result = userService.getUser(username);
+        } catch (CustomException e) {
+            log.error("Get user input service error : ",username);
         }
         String token = Jwts.builder()
-                .setSubject(input.getUserId())
+                .setSubject(result.getUserId().toString())
                 .setExpiration(new Date(System.currentTimeMillis() +
                         Long.parseLong(environment.getProperty("token.expiration_time"))))
                 .signWith(SignatureAlgorithm.HS512, environment.getProperty("token.secret") )
                 .compact();
 
         response.addHeader("token", token);
-        response.addHeader("userId", result.getUserId());
+        response.addHeader("userId", result.getUserId().toString());
     }
 }

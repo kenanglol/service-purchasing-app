@@ -9,12 +9,18 @@ import javax.validation.constraints.NotNull;
 public class UpdateUserRequest {
 
     @NotNull(message = "UserId is not null")
-    @Schema(description = "UserId", example = "Kenan", required = true)
-    private String userId;
+    @Schema(description = "UserId", example = "4541", required = true)
+    private Long userId;
 
-    @Schema(description = "Name", example = "Kenan", required = true)
-    private String name;
+    @Schema(description = "Name", example = "Kenan")
+    private String firstName;
 
-    @Schema(description = "Surname", example = "Gulol", required = true)
-    private String surname;
+    @Schema(description = "Middle Name", example = "F.")
+    private String middleName;
+
+    @Schema(description = "Surname", example = "Gülol")
+    private String surName;
+
+    @Schema(description = "Location", example = "Istanbul/Turkey")
+    private String location;
 }
