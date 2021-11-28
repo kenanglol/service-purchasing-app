@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class UpdateAdvertRequest {
     @NotNull(message = "Advert ID is not null")
     @Schema(description = "Advert ID", example = "12345678910", required = true)
-    private String advertID;
+    private Long advertID;
 
     @NotNull(message = "Advert name is not null")
     @Schema(description = "Advert Name", example = "Hello World Project!", required = true)
@@ -20,17 +20,9 @@ public class UpdateAdvertRequest {
     @Schema(description = "Service Condition Summary", example = "Service summary", required = true)
     private String summary;
 
-    @NotNull(message = "Service Advert Created Date is not null")
-    @Schema(description = "Service Advert Created Date(YYYYMMDDHH)", example = "20210060712", required = true)
-    private Integer advertCreateTime;
-
-    @NotNull(message = "Service Advert Minimum Price is not null")
-    @Schema(description = "Service Advert Minimum Price", example = "50", required = true)
-    private Integer minPrice;
-
-    @NotNull(message = "Service Category is not null")
-    @Schema(description = "Service Category", example = "Web site", required = true)
-    private String category;
+    @NotNull(message = "Service Advert Price is not null")
+    @Schema(description = "Service Advert Price", example = "50", required = true)
+    private Integer price;
 
     @NotNull(message = "Service City is not null")
     @Schema(description = "Service City", example = "Ankara", required = true)

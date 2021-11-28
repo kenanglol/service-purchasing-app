@@ -1,6 +1,7 @@
 package com.micro.ege.advert.advertservice.api;
 
 import com.micro.ege.advert.advertservice.api.model.*;
+import com.micro.ege.advert.advertservice.core.exception.BusinessException;
 import com.micro.ege.advert.advertservice.service.AdvertService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,7 +29,12 @@ public class AdvertController {
             @Valid
             @Parameter(description = "Request object for create",required = true)
             @RequestBody CreateAdvertRequest createAdvertRequest) {
-        return new ResponseEntity<>(advertService.createAdvert(createAdvertRequest), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(advertService.createAdvert(createAdvertRequest), HttpStatus.CREATED);
+        } catch (BusinessException busex) {
+
+        }
+
     }
 
     @Operation(summary = "Update Advert",description = "Update Advert")

@@ -9,10 +9,10 @@ import javax.validation.constraints.NotNull;
 @Schema(description = "Request that used in list an Advert")
 public class ListAdvertRequest {
     @Schema(description = "Service Provider ID", example = "12345678910", required = true)
-    private String serviceProviderID;
+    private Long serviceProviderID;
 
     @Schema(description = "Advert ID", example = "12345678910", required = true)
-    private String advertID;
+    private Long advertID;
 
     @Schema(description = "Service Advert Price", example = "10", required = true)
     private Integer minPrice;

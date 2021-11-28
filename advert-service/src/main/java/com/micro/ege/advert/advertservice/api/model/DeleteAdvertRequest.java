@@ -10,5 +10,5 @@ import javax.validation.constraints.NotNull;
 public class DeleteAdvertRequest {
     @NotNull(message = "Advert ID is not null")
     @Schema(description = "Advert ID", example = "12345678910", required = true)
-    private String advertID;
+    private Long advertID;
 }
