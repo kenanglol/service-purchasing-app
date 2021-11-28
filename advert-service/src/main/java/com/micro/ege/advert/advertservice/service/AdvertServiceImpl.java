@@ -1,5 +1,9 @@
 package com.micro.ege.advert.advertservice.service;
 
+import com.micro.ege.advert.advertservice.api.CreateAdvertRequest;
+import com.micro.ege.advert.advertservice.api.CreateAdvertResponse;
+import com.micro.ege.advert.advertservice.api.ListAdvertRequest;
+import com.micro.ege.advert.advertservice.api.ListAdvertResponse;
 import com.micro.ege.advert.advertservice.dto.AdvertDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,9 +22,7 @@ public class AdvertServiceImpl implements AdvertService {
     private final AdvertRepository AdvertRepository;
 
     @Override
-    public CreateAdvertServiceOutput createAdvert(CreateAdvertServiceInput createAdvertServiceInput) {
-
-        CreateAdvertServiceOutput result = new CreateAdvertServiceOutput();
+    public CreateAdvertResponse createAdvert(CreateAdvertRequest createAdvertRequest) {
         try{
             AdvertDto existAdvert = AdvertRepository.findByServiceProviderIDAndAdvertCreateTime(
                     createAdvertServiceInput.getServiceProviderID(),
@@ -38,10 +40,8 @@ public class AdvertServiceImpl implements AdvertService {
             advertDto.setServiceProviderID(createAdvertServiceInput.getServiceProviderID());
             advertDto.setAdvertName(createAdvertServiceInput.getAdvertName());
             advertDto.setSummary(createAdvertServiceInput.getSummary());
-            advertDto.setAdvertCreateTime(createAdvertServiceInput.getAdvertCreateTime());
             advertDto.setCategory(createAdvertServiceInput.getCategory());
-            advertDto.setMinPrice(createAdvertServiceInput.getMinPrice());
-            advertDto.setCity(createAdvertServiceInput.getCity());
+            advertDto.setPrice(createAdvertServiceInput.getMinPrice());
 
             AdvertRepository.save(advertDto);
 
@@ -138,8 +138,7 @@ public class AdvertServiceImpl implements AdvertService {
     }
 
     @Override
-    public ListAdvertServiceOutput listAdvert(ListAdvertServiceInput listAdvertServiceInput) {
-        ListAdvertServiceOutput result = new ListAdvertServiceOutput();
+    public ListAdvertResponse listAdvert(ListAdvertRequest listAdvertResponse) {
         List<AdvertDetailsDto> AdvertDetailsList = null;
 //        try{
 //            if ((listAdvertServiceInput.getAdvertID() != null)

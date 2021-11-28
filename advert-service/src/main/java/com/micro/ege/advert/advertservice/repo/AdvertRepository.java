@@ -1,17 +1,14 @@
 package com.micro.ege.advert.advertservice.repo;
 
 import com.micro.ege.advert.advertservice.dto.AdvertDto;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AdvertRepository extends CrudRepository<AdvertDto,String> {
+public interface AdvertRepository extends PagingAndSortingRepository<AdvertDto,Long> {
 
-    List<AdvertDto> findByCategory(String Category);
+    public List<AdvertDto> findByCategory(String Category);
 
-    List<AdvertDto> findByServiceProviderID(String serviceProviderID);
-
-    AdvertDto findByServiceProviderIDAndAdvertCreateTime(String serviceProviderID,
-                                                         LocalDateTime advertCreateTime);
+    public List<AdvertDto> findByServiceProviderID(Long providerId);
 }

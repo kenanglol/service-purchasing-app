@@ -1,7 +1,5 @@
 package com.micro.ege.advert.advertservice.dto;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -13,18 +11,9 @@ public class AdvertDto {
     private String advertName;
     private String serviceProviderID;
     private String summary;
-    private Integer minPrice;
-    private LocalDateTime advertCreateTime;
+    private Integer price;
     private String category;
     private String city;
-
-    public LocalDateTime getAdvertCreateTime() {
-        return advertCreateTime;
-    }
-
-    public void setAdvertCreateTime(LocalDateTime advertCreateTime) {
-        this.advertCreateTime = advertCreateTime;
-    }
 
     public String getAdvertID() {
         return advertID;
@@ -58,12 +47,12 @@ public class AdvertDto {
         this.summary = summary;
     }
 
-    public Integer getMinPrice() {
-        return minPrice;
+    public Integer getPrice() {
+        return price;
     }
 
-    public void setMinPrice(Integer minPrice) {
-        this.minPrice = minPrice;
+    public void setPrice(Integer minPrice) {
+        this.price = minPrice;
     }
 
     public String getCategory() {

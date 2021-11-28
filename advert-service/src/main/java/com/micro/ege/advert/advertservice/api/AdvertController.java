@@ -17,9 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/api/advert")
 public class AdvertController {
     private final AdvertService advertService;
-    private final AdvertMapper advertMapper;
     public AdvertController(AdvertService advertService) {
-        this.advertMapper = Mappers.getMapper(AdvertMapper.class);
         this.advertService = advertService;
     }
 
@@ -30,9 +28,7 @@ public class AdvertController {
             @Valid
             @Parameter(description = "Request object for create",required = true)
             @RequestBody CreateAdvertRequest createAdvertRequest) {
-        return new ResponseEntity<>(advertMapper.mapServiceOutputToApiResponse(
-                advertService.createAdvert(advertMapper.mapApiRequestToServiceInput(
-                        createAdvertRequest))), HttpStatus.CREATED);
+        return new ResponseEntity<>(advertService.createAdvert(createAdvertRequest), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Update Advert",description = "Update Advert")
@@ -41,9 +37,7 @@ public class AdvertController {
     public ResponseEntity<UpdateAdvertResponse> updateAdvert(
             @Parameter(description = "Request object for update",required = true)
             @RequestBody UpdateAdvertRequest updateAdvertRequest) {
-        return new ResponseEntity<>(advertMapper.mapServiceOutputToApiResponse(
-                advertService.updateAdvert(advertMapper.mapApiRequestToServiceInput(
-                        updateAdvertRequest))), HttpStatus.OK);
+        return new ResponseEntity<>(advertService.updateAdvert(updateAdvertRequest), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete Advert",description = "Delete Advert")
@@ -52,9 +46,16 @@ public class AdvertController {
     public ResponseEntity<DeleteAdvertResponse> deleteAdvert(
             @Parameter(description = "Request object for delete",required = true)
             @RequestBody DeleteAdvertRequest deleteAdvertRequest) {
-        return new ResponseEntity<>(advertMapper.mapServiceOutputToApiResponse(
-                advertService.deleteAdvert(advertMapper.mapApiRequestToServiceInput(
-                        deleteAdvertRequest))), HttpStatus.OK);
+        return new ResponseEntity<>(advertService.deleteAdvert(deleteAdvertRequest), HttpStatus.OK);
+    }
+
+    @Operation(summary = "List Advert",description = "List Advert")
+    @ApiResponse(responseCode = "200", description = "List Advert Response")
+    @GetMapping(path = "/{advertId}")
+    public ResponseEntity<ListAdvertResponse> listAdvert(
+            @Parameter(description = "Request object for list",required = true)
+            @PathVariable Long advertId) {
+        return new ResponseEntity<>(advertService.getAdvert(advertId), HttpStatus.OK);
     }
 
     @Operation(summary = "List Advert",description = "List Advert")
@@ -63,8 +64,6 @@ public class AdvertController {
     public ResponseEntity<ListAdvertResponse> listAdvert(
             @Parameter(description = "Request object for list",required = true)
             @RequestBody ListAdvertRequest listAdvertRequest) {
-        return new ResponseEntity<>(advertMapper.mapServiceOutputToApiResponse(
-                advertService.listAdvert(advertMapper.mapApiRequestToServiceInput(
-                        listAdvertRequest))), HttpStatus.OK);
+        return new ResponseEntity<>(advertService.listAdvert(listAdvertRequest), HttpStatus.OK);
     }
 }

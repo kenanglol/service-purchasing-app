@@ -1,13 +1,15 @@
 package com.micro.ege.advert.advertservice.service;
 
-import com.micro.ege.advert.advertservice.api.ListAdvertRequest;
+import com.micro.ege.advert.advertservice.api.*;
 
 public interface AdvertService {
-    CreateAdvertServiceOutput createAdvert(CreateAdvertServiceInput createAdvertServiceInput);
+    CreateAdvertResponse createAdvert(CreateAdvertRequest createAdvertRequest);
 
-    UpdateAdvertServiceOutput updateAdvert(UpdateAdvertServiceInput updateAdvertServiceInput);
+    UpdateAdvertResponse updateAdvert(UpdateAdvertRequest updateAdvertRequest);
 
-    DeleteAdvertServiceOutput deleteAdvert(DeleteAdvertServiceInput deleteAdvertServiceInput);
+    DeleteAdvertReponse deleteAdvert(DeleteAdvertRequest deleteAdvertRequest);
 
-    ListAdvertServiceOutput listAdvert(ListAdvertServiceInput listAdvertServiceInput);
+    ListAdvertResponse listAdvert(ListAdvertRequest listAdvertResponse);
+
+    Object getAdvert(Long advertId);
 }

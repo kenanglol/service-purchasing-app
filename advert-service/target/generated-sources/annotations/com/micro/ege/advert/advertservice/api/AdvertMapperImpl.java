@@ -1,13 +1,5 @@
 package com.micro.ege.advert.advertservice.api;
 
-import com.micro.ege.advert.advertservice.service.CreateAdvertServiceInput;
-import com.micro.ege.advert.advertservice.service.CreateAdvertServiceOutput;
-import com.micro.ege.advert.advertservice.service.DeleteAdvertServiceInput;
-import com.micro.ege.advert.advertservice.service.DeleteAdvertServiceOutput;
-import com.micro.ege.advert.advertservice.service.ListAdvertServiceInput;
-import com.micro.ege.advert.advertservice.service.ListAdvertServiceOutput;
-import com.micro.ege.advert.advertservice.service.UpdateAdvertServiceInput;
-import com.micro.ege.advert.advertservice.service.UpdateAdvertServiceOutput;
 import javax.annotation.processing.Generated;
 
 @Generated(
