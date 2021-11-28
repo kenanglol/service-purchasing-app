@@ -7,19 +7,19 @@ import java.time.LocalDateTime;
 public class AdvertDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String advertID;
+    private Long advertID;
     private String advertName;
-    private String serviceProviderID;
+    private Long serviceProviderID;
     private String summary;
     private Integer price;
     private String category;
     private String city;
 
-    public String getAdvertID() {
+    public Long getAdvertID() {
         return advertID;
     }
 
-    public void setAdvertID(String advertID) {
+    public void setAdvertID(Long advertID) {
         this.advertID = advertID;
     }
 
@@ -31,11 +31,11 @@ public class AdvertDto {
         this.advertName = advertName;
     }
 
-    public String getServiceProviderID() {
+    public Long getServiceProviderID() {
         return serviceProviderID;
     }
 
-    public void setServiceProviderID(String serviceProviderID) {
+    public void setServiceProviderID(Long serviceProviderID) {
         this.serviceProviderID = serviceProviderID;
     }
 

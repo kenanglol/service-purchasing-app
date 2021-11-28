@@ -1,11 +1,11 @@
 package com.micro.ege.advert.advertservice.api;
 
+import com.micro.ege.advert.advertservice.api.model.*;
 import com.micro.ege.advert.advertservice.service.AdvertService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class AdvertController {
     @Operation(summary = "Create Advert",description = "Create Advert")
     @ApiResponse(responseCode = "201", description = "Create Advert Response")
     @PostMapping(path = "/create")
-    public ResponseEntity<CreateAdvertResponse> createAdvert(
+    public ResponseEntity<ManipulationResponse> createAdvert(
             @Valid
             @Parameter(description = "Request object for create",required = true)
             @RequestBody CreateAdvertRequest createAdvertRequest) {
@@ -34,7 +34,7 @@ public class AdvertController {
     @Operation(summary = "Update Advert",description = "Update Advert")
     @ApiResponse(responseCode = "200", description = "Update Advert Response")
     @PutMapping(path = "/update")
-    public ResponseEntity<UpdateAdvertResponse> updateAdvert(
+    public ResponseEntity<ManipulationResponse> updateAdvert(
             @Parameter(description = "Request object for update",required = true)
             @RequestBody UpdateAdvertRequest updateAdvertRequest) {
         return new ResponseEntity<>(advertService.updateAdvert(updateAdvertRequest), HttpStatus.OK);
@@ -43,7 +43,7 @@ public class AdvertController {
     @Operation(summary = "Delete Advert",description = "Delete Advert")
     @ApiResponse(responseCode = "200", description = "Delete Advert Response")
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<DeleteAdvertResponse> deleteAdvert(
+    public ResponseEntity<ManipulationResponse> deleteAdvert(
             @Parameter(description = "Request object for delete",required = true)
             @RequestBody DeleteAdvertRequest deleteAdvertRequest) {
         return new ResponseEntity<>(advertService.deleteAdvert(deleteAdvertRequest), HttpStatus.OK);

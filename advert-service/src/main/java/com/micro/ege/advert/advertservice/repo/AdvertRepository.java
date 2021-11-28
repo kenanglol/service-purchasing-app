@@ -10,5 +10,7 @@ public interface AdvertRepository extends PagingAndSortingRepository<AdvertDto,L
 
     public List<AdvertDto> findByCategory(String Category);
 
+    public AdvertDto findByAdvertNameAAndServiceProviderID(String advertName, Long serviceProviderId);
+
     public List<AdvertDto> findByServiceProviderID(Long providerId);
 }

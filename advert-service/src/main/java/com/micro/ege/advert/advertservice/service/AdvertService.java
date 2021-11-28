@@ -1,13 +1,14 @@
 package com.micro.ege.advert.advertservice.service;
 
-import com.micro.ege.advert.advertservice.api.*;
+import com.micro.ege.advert.advertservice.api.model.*;
+import com.micro.ege.advert.advertservice.core.exception.BusinessException;
 
 public interface AdvertService {
-    CreateAdvertResponse createAdvert(CreateAdvertRequest createAdvertRequest);
+    ManipulationResponse createAdvert(CreateAdvertRequest createAdvertRequest) throws BusinessException;
 
-    UpdateAdvertResponse updateAdvert(UpdateAdvertRequest updateAdvertRequest);
+    ManipulationResponse updateAdvert(UpdateAdvertRequest updateAdvertRequest);
 
-    DeleteAdvertReponse deleteAdvert(DeleteAdvertRequest deleteAdvertRequest);
+    ManipulationResponse deleteAdvert(DeleteAdvertRequest deleteAdvertRequest);
 
     ListAdvertResponse listAdvert(ListAdvertRequest listAdvertResponse);
 

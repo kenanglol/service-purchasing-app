@@ -1,5 +1,7 @@
 package com.micro.ege.advert.advertservice.api;
 
+import com.micro.ege.advert.advertservice.api.model.*;
+
 import javax.annotation.processing.Generated;
 
 @Generated(

@@ -1,4 +1,4 @@
-package com.micro.ege.advert.advertservice.api;
+package com.micro.ege.advert.advertservice.api.model;
 
 import com.micro.ege.advert.advertservice.dto.AdvertDetailsDto;
 

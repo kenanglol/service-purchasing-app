@@ -1,13 +1,14 @@
-package com.micro.ege.advert.advertservice.api;
+package com.micro.ege.advert.advertservice.api.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Schema(description = "Response that used in deleting an Advert")
-public class DeleteAdvertResponse {
-    @Schema(description = "Is Succeeded", example = "true", required = true)
-    private Boolean isSucceeded;
+@AllArgsConstructor
+@NoArgsConstructor
+public class BaseResponse {
 
     @Schema(description = "Error Code", example = "11545L", required = true)
     private Long errorCode;

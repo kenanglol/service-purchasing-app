@@ -1,9 +1,9 @@
 package com.micro.ege.advert.advertservice.service;
 
-import com.micro.ege.advert.advertservice.api.CreateAdvertRequest;
-import com.micro.ege.advert.advertservice.api.CreateAdvertResponse;
-import com.micro.ege.advert.advertservice.api.ListAdvertRequest;
-import com.micro.ege.advert.advertservice.api.ListAdvertResponse;
+import com.micro.ege.advert.advertservice.api.model.CreateAdvertRequest;
+import com.micro.ege.advert.advertservice.api.model.ListAdvertResponse;
+import com.micro.ege.advert.advertservice.api.model.ManipulationResponse;
+import com.micro.ege.advert.advertservice.api.model.UpdateAdvertRequest;
 import com.micro.ege.advert.advertservice.dto.AdvertDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,8 @@ import com.micro.ege.advert.advertservice.repo.AdvertRepository;
 import java.util.List;
 import java.util.Optional;
 
+import static com.micro.ege.advert.advertservice.core.constant.AdvertMicroConstants.*;
+
 @RequiredArgsConstructor
 @Service
 public class AdvertServiceImpl implements AdvertService {
@@ -22,46 +24,35 @@ public class AdvertServiceImpl implements AdvertService {
     private final AdvertRepository AdvertRepository;
 
     @Override
-    public CreateAdvertResponse createAdvert(CreateAdvertRequest createAdvertRequest) {
-        try{
-            AdvertDto existAdvert = AdvertRepository.findByServiceProviderIDAndAdvertCreateTime(
-                    createAdvertServiceInput.getServiceProviderID(),
-                    createAdvertServiceInput.getAdvertCreateTime()
-            );
+    public ManipulationResponse createAdvert(CreateAdvertRequest createAdvertRequest) throws BusinessException {
+            AdvertDto existAdvert = AdvertRepository.findByAdvertNameAAndServiceProviderID(
+                    createAdvertRequest.getAdvertName(),
+                    createAdvertRequest.getServiceProviderID());
             if (existAdvert != null) {
                 throw new BusinessException(AdvertExceptions.TIME_IS_FILLED_ALREADY);
             }
 
-            if (createAdvertServiceInput.getMinPrice()<0) {
+            if (createAdvertRequest.getPrice()<0) {
                 throw new BusinessException(AdvertExceptions.MIN_PRICE_IS_NOT_LOWER_THAN_ZERO);
             }
 
             AdvertDto advertDto = new AdvertDto();
-            advertDto.setServiceProviderID(createAdvertServiceInput.getServiceProviderID());
-            advertDto.setAdvertName(createAdvertServiceInput.getAdvertName());
-            advertDto.setSummary(createAdvertServiceInput.getSummary());
-            advertDto.setCategory(createAdvertServiceInput.getCategory());
-            advertDto.setPrice(createAdvertServiceInput.getMinPrice());
+            advertDto.setServiceProviderID(createAdvertRequest.getServiceProviderID());
+            advertDto.setAdvertName(createAdvertRequest.getAdvertName());
+            advertDto.setSummary(createAdvertRequest.getSummary());
+            advertDto.setCategory(createAdvertRequest.getCategory());
+            advertDto.setPrice(createAdvertRequest.getPrice());
 
             AdvertRepository.save(advertDto);
-
-
+            ManipulationResponse result = new ManipulationResponse();
             result.setIsSucceeded(AdvertRepository.findById(advertDto.getAdvertID()).isPresent());
-            result.setErrorCode(0L);
-            result.setErrorMessage("İşlem Başarıyla Gerçekleştirildi.");
+            result.setErrorCode(SUCCESS_CODE);
+            result.setErrorMessage(SUCCESS_MSG);
             return result;
-
-        } catch (BusinessException businessException) {
-            result.setIsSucceeded(false);
-            result.setErrorCode(businessException.getErrorCode());
-            result.setErrorMessage(businessException.getErrorMessage());
-            return result;
-        }
-
     }
 
     @Override
-    public UpdateAdvertServiceOutput updateAdvert(UpdateAdvertServiceInput updateAdvertServiceInput) {
+    public ManipulationResponse updateAdvert(UpdateAdvertRequest updateAdvertRequest) {
 
         UpdateAdvertServiceOutput result = new UpdateAdvertServiceOutput();
 //        try{
