@@ -8,21 +8,13 @@ import javax.validation.constraints.NotNull;
 @Data
 @Schema(description = "Request that used in list an Advert")
 public class ListAdvertRequest {
-    @Schema(description = "Service Provider ID", example = "12345678910", required = true)
-    private Long serviceProviderID;
-
-    @Schema(description = "Advert ID", example = "12345678910", required = true)
-    private Long advertID;
-
-    @Schema(description = "Service Advert Price", example = "10", required = true)
-    private Integer minPrice;
-
-    @Schema(description = "Service City", example = "Ankara", required = true)
-    private Integer city;
-
-    @Schema(description = "Service Name", example = "Microservice Demo", required = true)
-    private Integer advertName;
 
     @Schema(description = "Service Category", example = "Web site", required = true)
-    private Integer category;
+    private String category;
+
+    @Schema(description = "Service Advert Price", example = "120")
+    private Integer price;
+
+    @Schema(description = "Service City", example = "Ankara")
+    private String city;
 }

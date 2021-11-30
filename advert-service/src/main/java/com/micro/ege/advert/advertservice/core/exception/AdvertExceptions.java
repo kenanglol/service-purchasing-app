@@ -13,4 +13,7 @@ public class AdvertExceptions {
 
     public static ExceptionData MIN_PRICE_IS_NOT_LOWER_THAN_ZERO = new ExceptionData(4L,
             "Gönderilen istek listeleme işlemi için uygun değildir.");
+
+    public static ExceptionData ADVERT_DELETE_ERROR = new ExceptionData(5L,
+            "Hizmet ilanı silinirken hata oluştu.");
 }
